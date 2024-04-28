@@ -18,3 +18,8 @@ class User(db.Model):
         return {'id': self.id,'username': self.username, 'email': self.email}
 
 db.create_all()
+
+# today is a sunday and I have 15 minutes left before I slave myself at my fast food work so I can't code alot rn ;D
+@app.route('/test', methods=['GET'])
+def test():
+    return jsonify({'message' : 'The server is running???'})
