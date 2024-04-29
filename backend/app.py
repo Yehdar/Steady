@@ -19,7 +19,18 @@ class User(db.Model):
 
 db.create_all()
 
-# today is a sunday and I have 15 minutes left before I slave myself at my fast food work so I can't code alot rn ;D
+# today is a sunday and I have 15 minutes left before I slave myself at my fast food job so I can't code alot rn ;D
 @app.route('/test', methods=['GET'])
 def test():
     return jsonify({'message' : 'The server is running???'})
+
+@app.route('/users', methods=['POST'])
+def create_user():
+  try:
+    data = request.get_json()
+    new_user = User(username=data['username'], email=data['email'])
+    db.session.add(new_user)
+    db.session.commit()
+    return make_response(jsonify({'message': 'user created'}), 201)
+  except e:
+    return make_response(jsonify({'message': 'error creating user'}), 500)
