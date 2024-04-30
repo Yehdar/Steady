@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  flask_app:
+    container_name: flask_app
+    image: flaskapp:1.0.0
+    build: 
+      context: ./backend
+      dockerfile: flask.dockerfile
+    ports:
+      - 4000:4000
+    environment:
+      - DB_URL=postgresql://postgres:postgres@db:5433/postgres
+    depends_on:
+      - db
   db:
     container_name: db
     image: postgres:13
