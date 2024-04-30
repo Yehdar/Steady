@@ -1,10 +1,8 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 from os import environ
 
-app - Flask(__name__)
-CORS(app)
+app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
 db = SQLAlchemy(app)
 
@@ -24,6 +22,15 @@ db.create_all()
 def test():
     return jsonify({'message' : 'The server is running???'})
 
+@app.route('/test-db-connection', methods=['GET'])
+def test_db_connection():
+    try:
+        db.engine.execute("SELECT 1")
+        return jsonify({'message': 'Database connection successful!'}), 200
+    except Exception as e:
+        return jsonify({'message': 'Error connecting to database', 'error': str(e)}), 500
+
+# create
 @app.route('/users', methods=['POST'])
 def create_user():
   try:
@@ -35,6 +42,7 @@ def create_user():
   except e:
     return make_response(jsonify({'message': 'error creating user'}), 500)
 
+# read
 @app.route('/users', methods=['GET'])
 def get_users():
   try:
@@ -43,6 +51,17 @@ def get_users():
   except e:
     return make_response(jsonify({'message': 'error getting users'}), 500)
 
+@app.route('/users/<int:id>', methods=['GET'])
+def get_user(id):
+  try:
+    user = User.query.filter_by(id=id).first()
+    if user:
+      return make_response(jsonify({'user': user.json()}), 200)
+    return make_response(jsonify({'message': 'user not found'}), 404)
+  except e:
+    return make_response(jsonify({'message': 'error getting user'}), 500)
+
+# update
 @app.route('/users/<int:id>', methods=['PUT'])
 def update_user(id):
   try:
@@ -57,6 +76,7 @@ def update_user(id):
   except e:
     return make_response(jsonify({'message': 'error updating user'}), 500)
 
+# delete 
 @app.route('/users/<int:id>', methods=['DELETE'])
 def delete_user(id):
   try:
