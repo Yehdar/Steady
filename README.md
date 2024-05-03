@@ -23,4 +23,5 @@ Project management service
 ### Frontend
 
 - to have the latest version of node: `npm install node --latest-npm`
+- to install axios: `npm install axios`
 - to develop in local environment: `npm run dev`
