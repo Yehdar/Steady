@@ -15,8 +15,8 @@ interface UserInterfaceProps {
 const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/";
   const [users, setUsers] = useState<User[]>([]);
-  const [newUsers, setNewUsers] = useState({ name: "", email: "" });
-  const [updateUsers, setUpdateUsers] = useState({
+  const [newUser, setNewUser] = useState({ name: "", email: "" });
+  const [updateUser, setUpdateUser] = useState({
     id: "",
     name: "",
     email: "",
@@ -63,7 +63,19 @@ const UserInterface: React.FC<UserInterfaceProps> = ({ backendName }) => {
       <h2 className="text-xl front-bold text-center text-black mb-6">{`${
         backendName.charAt(0).toUpperCase() + backendName.slice(1)
       } Backend`}</h2>
+      {/* display em */}
+      <div className="space-y-4">
+        {users.map((user) => (
+          <div
+            key={user.id}
+            className="flex items-center justify-between bg-whtie p-4 rounded-lg shadow"
+          >
+            <CardComponent card={user} />
+          </div>
+        ))}
+      </div>
     </div>
+
     // <div className="card">
     //   <h1>{backendName}</h1>
     //   <CardComponent card={{ id: 1, name: "John Doe", email: "mail" }} />
