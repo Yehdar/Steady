@@ -4,6 +4,8 @@
 
 Project management service
 
+<p align="center"><img src="https://github.com/Yehdar/steady/blob/main/demo/demo.png" width="80%"></p>
+
 ## Documentation
 
 ### Backend
