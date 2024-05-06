@@ -1,10 +1,10 @@
 import React from "react";
-import UserInterface from "@/components/UserInterface";
+import TaskInterface from "@/components/TaskInterface";
 
 const Home: React.FC = () => {
   return (
     <div>
-      <UserInterface backendName="flask" />
+      <TaskInterface backendName="flask" />
     </div>
   );
 };
