@@ -6,6 +6,10 @@ Project management service
 
 <p align="center"><img src="https://github.com/Yehdar/steady/blob/main/demo/demo.png" width="80%"></p>
 
+### Technologies Used
+
+Pythom, Flask, TypeScript, React, Axios, TailwindCSS, PostgreSQL, SQLAlchemy, Docker Compose, Postman, Chrome DevTools
+
 ## Documentation
 
 ### Backend
