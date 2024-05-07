@@ -8,7 +8,7 @@ Project management service
 
 ### Technologies Used
 
-Pythom, Flask, TypeScript, React, Axios, TailwindCSS, PostgreSQL, SQLAlchemy, Docker Compose, Postman, Chrome DevTools
+Python, Flask, TypeScript, React, Axios, TailwindCSS, PostgreSQL, SQLAlchemy, Docker Compose, Postman, Chrome DevTools
 
 ## Documentation
 
