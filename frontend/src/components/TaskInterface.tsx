@@ -4,8 +4,8 @@ import CardComponent from "./CardComponent";
 
 interface Task {
   id: number;
-  name: string;
-  email: string;
+  title: string;
+  description: string;
 }
 
 interface TaskInterfaceProps {
@@ -15,11 +15,11 @@ interface TaskInterfaceProps {
 const TaskInterface: React.FC<TaskInterfaceProps> = ({ backendName }) => {
   const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/";
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTask, setNewTask] = useState({ name: "", email: "" });
+  const [newTask, setNewTask] = useState({ title: "", description: "" });
   const [updateTask, setUpdateTask] = useState({
     id: "",
-    name: "",
-    email: "",
+    title: "",
+    description: "",
   });
 
   // const backgroundColors: { [key: string]: string } = {
@@ -60,7 +60,7 @@ const TaskInterface: React.FC<TaskInterfaceProps> = ({ backendName }) => {
         newTask
       );
       setTasks([response.data, ...tasks]);
-      setNewTask({ name: "", email: "" });
+      setNewTask({ title: "", description: "" });
     } catch (error) {
       console.error("erro making task: ", error);
     }
@@ -71,14 +71,18 @@ const TaskInterface: React.FC<TaskInterfaceProps> = ({ backendName }) => {
     e.preventDefault();
     try {
       await axios.put(`${apiURL}/api/${backendName}/tasks/${updateTask.id}`, {
-        name: updateTask.name,
-        email: updateTask.email,
+        title: updateTask.title,
+        description: updateTask.description,
       });
-      setUpdateTask({ id: "", name: "", email: "" });
+      setUpdateTask({ id: "", title: "", description: "" });
       setTasks(
         tasks.map((task) => {
           if (task.id === parseInt(updateTask.id)) {
-            return { ...task, name: updateTask.name, email: updateTask.email };
+            return {
+              ...task,
+              title: updateTask.title,
+              description: updateTask.description,
+            };
           }
           return task;
         })
@@ -115,14 +119,16 @@ const TaskInterface: React.FC<TaskInterfaceProps> = ({ backendName }) => {
       <form onSubmit={createTask} className="mb-6">
         <input
           placeholder="Title"
-          value={newTask.name}
-          onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
+          value={newTask.title}
+          onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
           className="mb-2 p-2 rounded w-full text-black"
         />
         <input
-          placeholder="Email"
-          value={newTask.email}
-          onChange={(e) => setNewTask({ ...newTask, email: e.target.value })}
+          placeholder="description"
+          value={newTask.description}
+          onChange={(e) =>
+            setNewTask({ ...newTask, description: e.target.value })
+          }
           className="mb-2 p-2 rounded w-full text-black"
         />
         <button
@@ -143,17 +149,17 @@ const TaskInterface: React.FC<TaskInterfaceProps> = ({ backendName }) => {
         />
         <input
           placeholder="Title"
-          value={updateTask.name}
+          value={updateTask.title}
           onChange={(e) =>
-            setUpdateTask({ ...updateTask, name: e.target.value })
+            setUpdateTask({ ...updateTask, title: e.target.value })
           }
           className="mb-2 p-2 rounded w-full text-black"
         />
         <input
           placeholder="Dscription"
-          value={updateTask.email}
+          value={updateTask.description}
           onChange={(e) =>
-            setUpdateTask({ ...updateTask, email: e.target.value })
+            setUpdateTask({ ...updateTask, description: e.target.value })
           }
           className="mb-2 p-2 rounded w-full text-black"
         />
@@ -183,7 +189,7 @@ const TaskInterface: React.FC<TaskInterfaceProps> = ({ backendName }) => {
 
     // <div className="card">
     //   <h1>{backendName}</h1>
-    //   <CardComponent card={{ id: 1, name: "John Doe", email: "mail" }} />
+    //   <CardComponent card={{ id: 1, title: "John Doe", description: "mail" }} />
     // </div>
   );
 };
